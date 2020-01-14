@@ -4,8 +4,8 @@ var request = require('request');
 var auth = require('../../../lib/auth');
 var dbConnection = require('../../../config/dbConfig')
 dbConnection.connect();
+
 router.post('/list', auth, function(req, res) {
-    
     var userData = req.decoded;
     var sql = "SELECT * FROM user WHERE id = ?"
     dbConnection.query(sql, [userData.userId], function(err, result){

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 router.use('/user', require('./user/index'));
+router.use('/trainee', require('./trainee/index'));
 
 
 /* GET home page. */
