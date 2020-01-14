@@ -90,6 +90,7 @@ router.post('/donation',auth, function(req, res){
     var bankCode = req.body.bank_code;
     var accountNum = req.body.account_num;
     var tranAmt = req.body.tran_amt;
+    var traineeId = req.body.trainee_id;
     var sql = 'SELECT * FROM user WHERE id = ?';
     dbConnection.query(sql, [userId], function (error, results, fields) {
         if (error) throw error;
@@ -125,8 +126,20 @@ router.post('/donation',auth, function(req, res){
         request(option, function (error, response, body) {
             // console.log(body);
             var resultObject = body;
+            var bankName = resultObject.bank_name;
+            var accountNum = resultObject.account_num_masked;
+
             if(resultObject.rsp_code == "A0000"){
-                res.json(resultObject);
+                var sql = "INSERT INTO donation (user_idx, trainee_idx, money, bank_name, account_num) VALUES (?, ?, ?, ?, ?)"
+                dbConnection.query(sql, [userId, traineeId, tranAmt, bankName, accountNum], function(err, result){
+                    if(err){
+                        console.error(err);
+                        throw err;
+                    }
+                    else {
+                        res.json(resultObject);      
+                    }
+                })
             } 
             else {
                 const data = {
