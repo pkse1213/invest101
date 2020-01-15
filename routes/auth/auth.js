@@ -6,6 +6,27 @@ var connection = require('../../config/dbConfig');
 var jwt = require('jsonwebtoken');
 var tokenKey = "fintechAcademy0$1#0@6!";
 
+router.get('/token', function(req, res){
+    var authCode = req.query.code;
+    console.log(authCode);
+    var option = {
+        method : "POST",
+        url : "https://testapi.openbanking.or.kr/oauth/2.0/token",
+        headers : "",
+        form : {
+            code : authCode,
+            client_id : 'ln6q4u3zmpl5g0JkTbATwGtDuz8boyV7DgTyIEU9',
+            client_secret : 'Nwj5rUlly0omSwbgtpje39ecd9zbb5WTf9K85oFX',
+            redirect_uri : 'http://localhost:3000/auth/token',
+            grant_type : 'authorization_code'
+        }
+    }
+    request(option, function (error, response, body) {
+        console.log(body);
+        var accessRequestResult = JSON.parse(body);
+        res.render('resultChild',{data : accessRequestResult})
+    });
+})
 
 router.post('/signUp', function(req, res){
     console.log(req.body);
