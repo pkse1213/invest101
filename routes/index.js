@@ -3,6 +3,7 @@ var router = express.Router();
 
 router.use('/user', require('./user/index'));
 router.use('/trainee', require('./trainee/index'));
+router.use('/auth', require('./auth/index'));
 
 
 /* GET home page. */

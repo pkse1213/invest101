@@ -2,13 +2,13 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 var auth = require('../../../lib/auth');
-var dbConnection = require('../../../config/dbConfig')
-dbConnection.connect();
+var connection = require('../../../config/dbConfig')
+
 
 router.post('/list', auth, function(req, res) {
     var userData = req.decoded;
-    var sql = "SELECT * FROM user WHERE id = ?"
-    dbConnection.query(sql, [userData.userId], function(err, result){
+    var sql = "SELECT * FROM invest101.user WHERE user_idx = ?"
+    connection.query(sql, [userData.userId], function(err, result){
         if(err){
             console.error(err);
             throw err;
@@ -39,8 +39,8 @@ router.post('/list', auth, function(req, res) {
 router.post('/balance', auth, function(req, res){
     var userData = req.decoded;
     var finusenum = req.body.fin_use_num; 
-    var sql = "SELECT * FROM user WHERE id = ?"
-    dbConnection.query(sql, [userData.userId], function(err, result){
+    var sql = "SELECT * FROM invest101.user WHERE user_idx = ?"
+    connection.query(sql, [userData.userId], function(err, result){
         if(err){
             console.error(err);
             throw err;
@@ -91,8 +91,8 @@ router.post('/donation',auth, function(req, res){
     var accountNum = req.body.account_num;
     var tranAmt = req.body.tran_amt;
     var traineeId = req.body.trainee_id;
-    var sql = 'SELECT * FROM user WHERE id = ?';
-    dbConnection.query(sql, [userId], function (error, results, fields) {
+    var sql = 'SELECT * FROM invest101.user WHERE id = ?';
+    connection.query(sql, [userId], function (error, results, fields) {
         if (error) throw error;
         var option = {
             method : "post",
@@ -130,8 +130,8 @@ router.post('/donation',auth, function(req, res){
             var accountNum = resultObject.account_num_masked;
 
             if(resultObject.rsp_code == "A0000"){
-                var sql = "INSERT INTO donation (user_idx, trainee_idx, money, bank_name, account_num) VALUES (?, ?, ?, ?, ?)"
-                dbConnection.query(sql, [userId, traineeId, tranAmt, bankName, accountNum], function(err, result){
+                var sql = "INSERT INTO invest101.donation (user_idx, trainee_idx, money, bank_name, account_num) VALUES (?, ?, ?, ?, ?)"
+                connection.query(sql, [userId, traineeId, tranAmt, bankName, accountNum], function(err, result){
                     if(err){
                         console.error(err);
                         throw err;
