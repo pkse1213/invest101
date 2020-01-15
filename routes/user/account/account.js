@@ -91,7 +91,7 @@ router.post('/donation',auth, function(req, res){
     var accountNum = req.body.account_num;
     var tranAmt = req.body.tran_amt;
     var traineeId = req.body.trainee_id;
-    var sql = 'SELECT * FROM invest101.user WHERE id = ?';
+    var sql = 'SELECT * FROM invest101.user WHERE user_idx = ?';
     connection.query(sql, [userId], function (error, results, fields) {
         if (error) throw error;
         var option = {
