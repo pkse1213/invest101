@@ -26,9 +26,8 @@
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 
-  <style>
-
-  </style>
+  <!-- Template global css file. Requared all pages -->
+	<link rel="stylesheet" type="text/css" href="css/global.style.css">
 
 </head>
 
@@ -103,28 +102,33 @@
   </nav>
 
   <!-- 연습생 상세페이지 내용-->
-  <br><br><br><br>
+  <br><br><br><br><br><br>
   <div class="footer text-center" style="background-color:rgb(255, 255, 255); overflow: hidden; height:auto;">
     <div class="container">
       <div class="col-lg-4 mb-5 mb-lg-0" style="display: flex; align-items: flex-start; margin-left: 150px;">
         <!-- 연습생 상세정보 -->
+        
         <div style="float: left; margin-right: 50px; color: black; text-align:left; ">
           <div id="mainPhoto"></div><br>
-          <div id="name"><span style="color: darkgray;">이름&nbsp;&nbsp;&nbsp;</span></div>
-          <div id="birthday"><span style="color: darkgray;">출생&nbsp;&nbsp;&nbsp;</span></div>
-          <div id="age"><span style="color: darkgray;">나이&nbsp;&nbsp;&nbsp;</span></div>
-          <div id="idol"><span style="color: darkgray;">소속그룹&nbsp;&nbsp;&nbsp;</span></div>
-          <div id="company"><span style="color: darkgray;">소속사&nbsp;&nbsp;&nbsp;</span></div>
-          <div id="instagram"><span style="color: darkgray;">SNS&nbsp;&nbsp;&nbsp;</span></div>
-          <div id="youtube"><span style="color: darkgray;">영상&nbsp;&nbsp;&nbsp;</span></div><br>
+          <div id="name"><span style="color: #57626d;">이름&nbsp;&nbsp;&nbsp;</span></div>
+          <div id="birthday"><span style="color: #57626d;">출생&nbsp;&nbsp;&nbsp;</span></div>
+          <div id="age"><span style="color: #57626d;">나이&nbsp;&nbsp;&nbsp;</span></div>
+          <div id="idol"><span style="color: #57626d;">소속그룹&nbsp;&nbsp;&nbsp;</span></div>
+          <div id="company"><span style="color: #57626d;">소속사&nbsp;&nbsp;&nbsp;</span></div>
+          <div id="instagram"><span style="color: #57626d;">SNS&nbsp;&nbsp;&nbsp;</span></div><br>
+          <div id="youtube"><span style="color: #57626d;">활동영상&nbsp;&nbsp;&nbsp;</span></div><br>
         </div>
         <br>
 
         <!-- 후원 -->
         <div style="float: left; color: black; text-align:left;">
-          <input type="button" cladd="button" id="supportBtn"
-            style="float: right; width: 120px; height: 50px; background-color: #82CBC4; color: white;"
-            value="후원하기" /><br><br><br><br><br>
+          <input type="button" cladd="button" id="supportBtn" class="button circle block orange" 
+            style="float: right; width: 120px; height: 50px; background-color: #1abc9c; color: white; margin-right:20px;"
+            value="후원하기" />
+
+
+        
+            <br><br><br><br><br>
           <i class="material-icons"> favorite_border </i>
           <span id="support_people"><span style="color: darkgray;">후원인원&nbsp;&nbsp;&nbsp;</span></span><br>
 
@@ -227,7 +231,7 @@
 
     //후원하기버튼
     $('#supportBtn').click(function () {
-      window.open("http://localhost:3000/donation?id=" + traineeId);
+      window.location.replace("http://localhost:3000/donation?id=" + traineeId);
     })
 
 
@@ -242,7 +246,7 @@
 
           console.log("dfdsfsdfdsfsdf")
           $("#mainPhoto").append('<img src="' + data.photo1 + '" style="width:160px; height:200px;">');
-          $("#support_money").append('<span>' + data.donation_sum + '</span>');
+          $("#support_money").append('<span>' + data.donation_sum.toLocaleString() + '</span>');
           $("#support_people").append(data.donation_num);
           $("#name").append(data.name);
           $("#birthday").append(data.birthday);
@@ -268,7 +272,7 @@
             strokeWidth: 4,
             easing: 'easeInOut',
             duration: 800,
-            color: '#82CBC4',
+            color: '#1abc9c',
             trailColor: '#eee',
             trailWidth: 10,
             svgStyle: { width: '100%', height: '200%' },
@@ -295,7 +299,7 @@
             strokeWidth: 4,
             easing: 'easeInOut',
             duration: 800,
-            color: '#82CBC4',
+            color: '#1abc9c',
             trailColor: '#eee',
             trailWidth: 10,
             svgStyle: { width: '100%', height: '200%' },
@@ -314,7 +318,7 @@
             from: { color: '#FFEA82' },
             to: { color: '#ED6A5A' },
             step: (state, bar2) => {
-              bar2.setText(Math.round(bar2.value() * 100) + ' %');
+              bar2.setText(Math.round(bar2.value() * 100) + ' %&nbsp;&nbsp;&nbsp;&nbsp;STEP 2');
             }
           });
 
@@ -322,7 +326,7 @@
             strokeWidth: 4,
             easing: 'easeInOut',
             duration: 800,
-            color: '#82CBC4',
+            color: '#1abc9c',
             trailColor: '#eee',
             trailWidth: 10,
             svgStyle: { width: '100%', height: '200%' },
@@ -341,7 +345,7 @@
             from: { color: '#FFEA82' },
             to: { color: '#ED6A5A' },
             step: (state, bar3) => {
-              bar3.setText(Math.round(bar3.value() * 100) + ' %');
+              bar3.setText(Math.round(bar3.value() * 100) + ' %&nbsp;&nbsp;&nbsp;&nbsp;STEP 3');
             }
           });
           bar1.animate(percent_1, function () {
