@@ -192,7 +192,6 @@
 
   <!--후원하기 -->
   <script>
-    console.log("-------------------------------------------------")
     function getQueryStringObject() {
       var a = window.location.search.substr(1).split('&');
       if (a == "") return {};
@@ -209,9 +208,7 @@
     var qs = getQueryStringObject();
     var jwtToken = sessionStorage.getItem('jwtToken');
     var dataList;
-    var selectedIdx = 0;
     var traineeId = qs.id;
-    console.log("쿼리스트링" + qs);
     var jwtToken = sessionStorage.getItem('jwtToken');
 
     $.ajax({
@@ -221,8 +218,8 @@
         'x-access-token': jwtToken
       },
       success: function (data) {
-        //console.log( data);
-        dataList = data;
+        console.log(data.res_list);
+        dataList = data.res_list;
         for (var i = 0; i < data.res_list.length; i++) {
           $("#account").append("<option>" + "(" + data.res_list[i].bank_name + ") " + data.res_list[i].account_num_masked + "</option>")
         }
@@ -235,11 +232,12 @@
     })
 
     $("#okBtn").click(function () {
-      selectedIdx = $("#account option:selected");
-      console.log("선택한 인덱스: " + selectedIdx);
+      var selectedIdx = document.getElementById("account").selectedIndex;
+      console.log(dataList[selectedIdx]);
+
       var tran_amt = $("#money").val();
       var finUseNum = dataList[selectedIdx].fintech_use_num
-      var bankCode = dataList[selectedIdx].bank_code_sub
+      var bankCode = dataList[selectedIdx].bank_code_std
       $.ajax({
         url: 'http://localhost:3000/user/account/donation',
         type: 'post',
@@ -254,8 +252,8 @@
           bank_code: bankCode
         },
         success: function (data) {
-          console.log("traineeid: " + data);
-          alert(traineeId + "에게 " + account_num + "계좌에서 " + tran_amt + "원이 후원되었습니다.");
+          alert("♥️당신의 연습생에게 " + tran_amt + "원이 후원되었습니다.♥️");
+          window.location = '/myDona';
         }
       })
     })

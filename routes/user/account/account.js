@@ -141,7 +141,6 @@ router.post('/donation', auth, function(req, res){
                         throw err;
                     }
                     else {
-                        // console.log("스벅스벅2222" + tranAmt);
                         res.json(resultObject);      
                     }
                 })
