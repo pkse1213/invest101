@@ -6,7 +6,7 @@ var connection = require('../../config/dbConfig');
 var jwt = require('jsonwebtoken');
 var tokenKey = "fintechAcademy0$1#0@6!";
 
-
+//token?code=sdafhekjkldaf&s
 router.get('/token', function(req, res){
     var authCode = req.query.code;
     console.log(authCode);
