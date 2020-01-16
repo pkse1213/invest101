@@ -25,39 +25,9 @@ router.get('/sumAll', function(req,res){
     });
 })
 
-
-router.get('/getMainData', function(req,res){
-    connection.query('SELECT * FROM invest101.trainee', function (error, results, fields) {
-        if (error) throw error;
-        console.log('The result is: ', results);
-        res.json(results);
-    });
-})
-
-
-
-router.post('/supportMoney', function (req, res) {
-    var traineeId = req.body.trainee_idx;
-    var sql = "SELECT sum(money) as support FROM invest101.donation WHERE trainee_idx = ?";
-    connection.query(sql, [traineeId],function (error, results, fields) {
-        if (error) throw error;
-        res.json(results);
-    });
-})
-
-router.post('/supportPeople', function (req, res) {
-    var traineeId = req.body.trainee_idx;
-    var sql = "SELECT count(*) as people FROM invest101.donation WHERE trainee_idx = ?";
-    connection.query(sql, [traineeId],function (error, results, fields) {
-        if (error) throw error;
-        res.json(results);
-    });
-})
-
-
 router.get('/:trainee_idx/detail', function(req, res){
     var traineeId = req.params.trainee_idx;
-    var detail_sql = "SELECT t.*, sum(d.money) as donation_sum FROM invest101.trainee as t JOIN invest101.donation as d ON t.trainee_idx = d.trainee_idx where t.trainee_idx = ?"
+    var detail_sql = "SELECT t.*, sum(d.money) as donation_sum, count(d.money) as donation_num FROM invest101.trainee as t JOIN invest101.donation as d ON t.trainee_idx = d.trainee_idx where t.trainee_idx = ?"
     connection.query(detail_sql, [traineeId], function(err, result){
         if(err){
             console.error(err);
