@@ -59,6 +59,18 @@ router.get('/listByDonation', function(req, res){
     })
 
 });
-
+//메인화면 연습생 데뷔알림
+router.get('/albumList',function(req,res){
+    var sql = 'SELECT * FROM invest101.bugs_music;'
+    connection.query(sql, [], function(err, result){
+        if(err){
+            console.error(err);
+            throw err;
+        }
+        else {
+            res.json(result);  
+        }
+    })
+})
 
 module.exports = router;
