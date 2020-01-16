@@ -62,10 +62,8 @@
                 <div>
                     <ul class="navbar-nav ml-auto" >          
                         <li class="nav-item mx-0 mx-lg-1" >
-                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="login" >로그인</a>
-                           <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" id ="logout" >로그아웃</a>
-                           
-                                   
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" id="login" href="login" display="block" >로그인</a>  
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" id ="logout" display="none">로그아웃</a>                                       
                         </li>
                         <li class="nav-item mx-0 mx-lg-1">
                             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" >/</a>
@@ -74,7 +72,8 @@
                             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="signup">회원가입</a>
                         </li>
                     </ul> 
-                </div>
+               </div>
+>
 
                 <div>
                     <ul class="navbar-nav ml-auto">          
@@ -227,8 +226,13 @@
   <script src="js/freelancer.min.js"></script>
 
   <script>
-        //로그아웃 버튼 적용 참고
-        $('#logout').click(function(){
+
+    //로그인 로그아웃 display 처리
+    
+  
+
+    //로그아웃 버튼시 로그아웃처리
+    $('#logout').click(function(){
       var jwtToken = sessionStorage.getItem('jwtToken');
       if (jwtToken != null) {
       sessionStorage.removeItem('jwtToken');
@@ -237,8 +241,7 @@
     }
     })
 
-    //로그인시 로그아웃으로 메인상단 변경
- 
+
 
 
     $('#mypageBtn').click(function () {

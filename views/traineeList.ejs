@@ -93,12 +93,12 @@
   </nav>
 
   <!-- 연습생 순위 상세페이지 내용-->
-  <br><br><br><br><br><br><br>
+  <br><br><br><br><br><br>
   <div class="footer text-center" style="background-color:rgb(255, 255, 255); overflow: hidden; height:auto;">
     
       
         <!--연습생목록 테이블-->
-              
+        <h1 style="color: #1abc9c;">Invest 101</h1><br>   
           <div id="mainList" > </div>
            
    
@@ -180,7 +180,7 @@
           
           for (var i = 0; i < data.length; i++) {
             if (i % 4 == 0) $("#mainList").append('<br>');
-            $("#mainList").append('<a href =' + 'http://localhost:3000/traineeInfo?id=' + data[i].trainee_idx + '>' + '<img src="' + data[i].photo1 + '">');
+            $("#mainList").append('<a href =' + 'http://localhost:3000/traineeInfo?id=' + data[i].trainee_idx + '>' + '<img src="' + data[i].photo1 + '" vspace=10 hspace=10>');
           }
         }
     })

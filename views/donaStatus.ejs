@@ -90,42 +90,18 @@
   <div class="container">
     <div class="row" style="margin-left:150px;">  
           
-          <div  style="text-align:center; width:600px; height:auto; margin-left:100px;">
+          <div  style="text-align:center; width:800px; height:auto; ">
                 <!--총 모금현황-->
                 <div>
-                    <h3 style="color: black;"> "현재 후원된 총 금액"</h2> <br>
+                    <h3 style="color: #1abc9c;"> "현재 후원된 총 금액"</h2> <br>
                    
-                          <h1 id="sumAll" style="color: black;"></h1>
+                          <h1 id="sumAll" style="color: #1abc9c;"></h1>
                 
                 </div>
-                <br><br>
+                <br>
                 <!--연습생 후원금 링크 1등~5등-->
-                <div style="margin-left:150px;">
-                    <div style="float: left; border: 1px solid rebeccapurple;">
-                    <p style="color: black;">1등</p><br>
-                    <p style="color: black;"></p>10000원</p>
-                    </div>
-
-                    <div style="float: left; border: 1px solid rebeccapurple;"> 
-                    <p style="color: black;">2등</p>
-                    <p style="color: black;"></p>10000원</p>
-                    </div>
-
-                    <div style="float: left; border: 1px solid rebeccapurple;">
-                    <p style="color: black;">3등</p>
-                    <p style="color: black;"></p>10000원</p>
-                    </div>
-
-                    <div style="float: left; border: 1px solid rebeccapurple;">
-                    <p style="color: black;">4등</p>
-                    <p style="color: black;"></p>10000원</p>
-                    </div>
-
-                    <div style="float: left; border: 1px solid rebeccapurple;">
-                    <p style="color: black;">5등</p>
-                    <p style="color: black;"></p>10000원</p>
-                    </div>
-               </div>
+                <h2>연습생 후원금 명예의 전당</h2>
+                <div id = 'ranking'>
 
         </div>    
 
@@ -203,36 +179,53 @@
 
 
   <script>
-    
-    sumAll()
-    function sumAll() {
-      $.ajax({
-        url: 'http://localhost:3000/trainee/sumAll',
-        type: 'get',
-        success: function (data) {
-          $("#sumAll").append(data[0].sumall + '원');
-        }
-      })
-    }
-
-    $('#logoutBtn').click(function () {
-      var jwtToken = sessionStorage.getItem('jwtToken');
-      //console.log(jwtToken);
-      sessionStorage.removeItem('jwtToken');
-      alert('로그아웃 되었습니다');
-      console.log('로그아웃');
-      location.replace('/');
-    })
-    $('#mypageBtn').click(function () {
+    $('#myDona').click(function(){
       var jwtToken = sessionStorage.getItem('jwtToken');
       if (jwtToken == null) {
-        alert('로그인해주세요');
-        location.replace('/login');
-      } else {
-        location.replace('/mypage')
+        alert('로그인해주세요')
+        window.location('/login')
       }
-    })
+     }
+    )
+      sumAll()
+      function sumAll() {
+        $.ajax({
+          url: 'http://localhost:3000/trainee/sumAll',
+          type: 'get',
+          success: function (data) {
+            $("#sumAll").append(data[0].sumall + '원');
+          }
+        })
+      }
+      $('#logoutBtn').click(function () {
+        var jwtToken = sessionStorage.getItem('jwtToken');
+        //console.log(jwtToken);
+        sessionStorage.removeItem('jwtToken');
+        alert('로그아웃 되었습니다');
+        console.log('로그아웃');
+        location.replace('/');
+      })
+      $('#mypageBtn').click(function () {
+        var jwtToken = sessionStorage.getItem('jwtToken');
+        if (jwtToken == null) {
+          alert('로그인해주세요');
+          location.replace('/login');
+        } else {
+          location.replace('/mypage')
+        }
+      })
+      ranking()
+      function ranking(){
+        $.ajax({
+          url: 'http://localhost:3000/trainee/listByDonation',
+          type: 'get',
+          success: function (data) {
+            for(var i = 0; i < 5; i++)
+            $("#ranking").append('<a href =' + 'http://localhost:3000/traineeInfo?id=' + data[i].trainee_idx + '>'+'<img src='+data[i].photo1+' vspace=5 hspace=5>');
+          }
+        })
+      }
+  </script>
 
-</script>
 </body>
 </html>
