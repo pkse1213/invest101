@@ -6,6 +6,7 @@ var connection = require('../../config/dbConfig');
 var jwt = require('jsonwebtoken');
 var tokenKey = "fintechAcademy0$1#0@6!";
 
+
 router.get('/token', function(req, res){
     var authCode = req.query.code;
     console.log(authCode);
@@ -27,6 +28,11 @@ router.get('/token', function(req, res){
         res.render('resultChild',{data : accessRequestResult})
     });
 })
+
+
+
+
+
 
 router.post('/signUp', function(req, res){
     console.log(req.body);
@@ -84,6 +90,12 @@ router.post('/signIn', function(req, res){
             res.json(0);
         }    
     });
+})
+
+//로그인 로그아웃 처리
+router.post('/', function(req, res){
+   
+    
 })
 
 

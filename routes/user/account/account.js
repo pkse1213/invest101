@@ -81,16 +81,17 @@ router.post('/balance', auth, function(req, res){
     })
 })
 
-router.post('/donation',auth, function(req, res){
+//후원금보내기
+router.post('/donation', auth, function(req, res){
     // console.log(req.decoded);
     var userId = req.decoded.userId
     var countnum = Math.floor(Math.random() * 1000000000) + 1;
     var transId = "T991605500U" + countnum;
     var finUseNum = req.body.fin_use_num;
     var bankCode = req.body.bank_code;
-    var accountNum = req.body.account_num;
     var tranAmt = req.body.tran_amt;
     var traineeId = req.body.trainee_id;
+
     var sql = 'SELECT * FROM invest101.user WHERE user_idx = ?';
     connection.query(sql, [userId], function (error, results, fields) {
         if (error) throw error;
@@ -111,8 +112,8 @@ router.post('/donation',auth, function(req, res){
                 "tran_dtime":  "20190910101921", 
                 "req_client_name":"박세은",
                 "req_client_bank_code":bankCode,
-                "req_client_account_num": accountNum,
                 "req_client_fintech_use _num":finUseNum,
+                "req_client_account_num":"5859040285",
                 "req_client_num":"HONGGILDONG1234",
                 "transfer_purpose": "TR",
                 "sub_frnc_name":"하위가맹점",
@@ -128,6 +129,9 @@ router.post('/donation',auth, function(req, res){
             var resultObject = body;
             var bankName = resultObject.bank_name;
             var accountNum = resultObject.account_num_masked;
+            console.log("스벅스벅" + resultObject);
+            console.log("스벅스벅" + bankName);
+            console.log("스벅스벅" + accountNum);
 
             if(resultObject.rsp_code == "A0000"){
                 var sql = "INSERT INTO invest101.donation (user_idx, trainee_idx, money, bank_name, account_num) VALUES (?, ?, ?, ?, ?)"
@@ -137,6 +141,7 @@ router.post('/donation',auth, function(req, res){
                         throw err;
                     }
                     else {
+                        // console.log("스벅스벅2222" + tranAmt);
                         res.json(resultObject);      
                     }
                 })

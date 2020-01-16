@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+	<title>Invest101_login</title>
+
+	<!-- Google font file. If you want you can change. -->
+	<link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,900" rel="stylesheet">
+
+	<!-- Fontawesome font file css -->
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+
+	<!-- Template global css file. Requared all pages -->
+	<link rel="stylesheet" type="text/css" href="css/global.style.css">
+</head>
+
+<body>
+	
+	<div class="wrapper">
+	
+		<div class="wrapper-inline">
+			<!-- Header area start -->
+			<header style="background-color: #2c3e50;"> <!-- extra class no-background -->
+				<a class="go-back-link" href="javascript:history.back();" style="color: white;"><i class="fa fa-arrow-left"></i></a>
+				<h1 class="page-title" style="color: white;">로그인</h1>
+				
+			</header>
+			<!-- Header area end -->
+			<!-- Page content start -->
+			<main>
+			
+				<div class="container">
+					<div class="form-divider"></div>
+					<div class="form-divider"></div>
+					<div class="form-divider"></div>
+					<div class="form-divider"></div>
+
+					<div class="form-row-group with-icons" style="width:500px; height:25pxpx; margin-left:550px;">
+						<div class="form-row no-padding">
+							<i class="fa fa-envelope"></i>
+                           
+                            <input type="email" id="userEmail" class="form-element" placeholder="Username or Email" style="width:500px; height:30pxpx;">
+                        </div>
+						<div class="form-row no-padding">
+							<i class="fa fa-lock"></i>
+                            
+                            <input type="password" id="userPassword" class="form-element" placeholder="Password" style="width:500px; height:30pxpx;">
+
+						</div>
+					</div>
+
+					
+					<div class="form-divider"></div>
+
+					<div class="form-row" style="align-items: center; text-align: center; margin-left:730px;">
+                       
+						<button type="button" id="loginBtn" class="button circle block orange" 
+						style="width:120px; height:30pxpx;">로그인</button>
+					</div>
+					<br>
+					<div class="form-row txt-center mt-15" style="margin-left:10px;"">
+						아직 회원이 아니신가요? &nbsp;&nbsp;  <a href="signup" data-loader="show">회원가입</a>
+					</div>
+
+				</div>
+			</main>
+			<!-- Page content end -->
+		</div>
+	</div>
+
+
+	<!--Page loader DOM Elements. Requared all pages-->
+	<div class="sweet-loader">
+		<div class="box">
+		  	<div class="circle1"></div>
+		  	<div class="circle2"></div>
+		  	<div class="circle3"></div>
+		</div>
+	</div>
+
+	<!-- JQuery library file. requared all pages -->
+	<script src="js/jquery-3.2.1.min.js"></script>
+
+	<!-- Template global script file. requared all pages -->
+    <script src="js/global.script.js"></script>
+    
+    <script>
+    
+        $("#loginBtn").click(function(){
+                
+            var password = $("#userPassword").val();
+            var email = $("#userEmail").val();
+
+            $.ajax({
+                url:'http://localhost:3000/auth/signIn',
+                type : 'POST',
+                data : {
+                    password : password,
+                    email : email,
+                },
+                success:function(data){
+                    if(data == 0){
+                        alert("비밀번호가 다릅니다.");
+                    }
+                    else {
+                        sessionStorage.setItem('jwtToken', data);
+                        window.location = "/main"
+                        
+                    }
+                }
+            })    
+		})
+		
+		
+
+    </script>
+
+	
+</body>
+
+</html>

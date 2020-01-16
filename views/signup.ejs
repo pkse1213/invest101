@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+	<title>Invest101_signup</title>
+
+	<!-- Google font file. If you want you can change. -->
+	<link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,900" rel="stylesheet">
+
+	<!-- Fontawesome font file css -->
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+
+	<!-- Template global css file. Requared all pages -->
+	<link rel="stylesheet" type="text/css" href="css/global.style.css">
+</head>
+
+<body>
+	
+	<div class="wrapper">
+
+		<div class="wrapper-inline">
+			<!-- Header area start -->
+			<header style="background-color: #2c3e50;"> <!-- extra class no-background -->
+				<a class="go-back-link" href="javascript:history.back();" style="color: white;"><i class="fa fa-arrow-left"></i></a>
+				<h1 class="page-title" style="color: white;">회원가입</h1>
+				<div class="navi-menu-button">
+					<em></em>
+					<em></em>
+					<em></em>
+				</div>
+			</header>
+			<!-- Header area end -->
+			<!-- Page content start -->
+			<div class="form-divider"></div>
+			<div class="form-divider"></div>
+			
+			<div>
+				<div class="container">
+					<div class="form-divider"></div>
+				  <div class="form-divider"></div>			
+					<div class="form-divider"></div>
+
+					<!--회원가입시 입력창-->
+					<div class="form-row-group with-icons" style="width:500px; height:25pxpx; margin-left:550px;">
+						<div class="form-row no-padding">
+							<i class="fa fa-user"></i>
+                            
+                            <input type="text" id="userName"  class="form-element" placeholder="Username" value="이름">
+                        </div>
+                        <div class="form-row no-padding">
+                            <i class="fa fa-envelope"></i>
+                            
+                            <input type="email" id="userEmail" class="form-element" placeholder="Email" value="이메일">
+                        </div>
+                        <div class="form-row no-padding">
+                            <i class="fa fa-lock"></i>
+                            
+                            <input type="password" id="userPassword" class="form-element" placeholder="Password" value="비밀번호">
+						</div>
+									
+					</div>
+					<div class="form-divider"></div>
+						<!--인증하기 버튼-->
+					<div class="form-row" style=" margin-left:730px;">
+					<button type='button' id="authBtn" class="button circle block orange" style="width:120px; height:25pxpx;">인증받기</button> 
+					</div>	
+					
+					<div class="form-divider"></div>
+						<!--인증하면 입력되는 값-->
+						<div class="form-row-group with-icons" style="width:500px; height:25pxpx; margin-left:550px;">
+							<div class="form-row no-padding">
+								<i class="fa fa-credit-card"></i>                          
+								<input type="text" id="accessToken" class="form-element" placeholder="Email" value="accessToken">
+							</div>
+							<div class="form-row no-padding">
+								<i class="fa fa-credit-card-alt"></i>                 
+								<input type="text" id="refreshToken" class="form-element" placeholder="Email" value="refreshToken">
+							</div>
+							<div class="form-row no-padding">
+								<i class="fa fa-info"></i>                    
+								<input type="text" id="userseqno" class="form-element" placeholder="Email" value="userseqno">
+							</div>
+										
+						</div>
+                     
+				
+					</div>
+
+					<div class="form-divider"></div>
+
+					<!--회원가입 완료버튼-->
+					<div class="form-row" style=" margin-left:750px;">
+                                              
+                            <button type='button' id="signupBtn" class="button circle block orange" style="width:120px; height:25pxpx;">회원가입</button> 
+                            <div class="form-divider"></div>
+                            
+                    </div>
+
+					<div class="form-row txt-center mt-15">
+						&nbsp; &nbsp;이미 회원이신가요?&nbsp; &nbsp;<a href="login" data-loader="show" style="color: 2c3e50;">로그인</a>
+					</div>
+
+				</div>
+			</main>
+			<!-- Page content end -->
+		</div>
+	</div>
+
+
+	<!--Page loader DOM Elements. Requared all pages-->
+	<div class="sweet-loader">
+		<div class="box">
+		  	<div class="circle1"></div>
+		  	<div class="circle2"></div>
+		  	<div class="circle3"></div>
+		</div>
+	</div>
+
+	<!-- JQuery library file. requared all pages -->
+	<script src="js/jquery-3.2.1.min.js"></script>
+
+	<!-- Template global script file. requared all pages -->
+    <script src="js/global.script.js"></script>
+    
+    <script>
+        $("#signupBtn").click(function(){
+            var name = $("#userName").val();        
+            var email = $("#userEmail").val();        
+            var password = $("#userPassword").val();   
+            var accessToken = $("#accessToken").val(); 
+            var refreshToken = $("#accessToken").val(); 
+            var userSeqNo = $("#userseqno").val(); 
+
+
+            $.ajax({
+                url:'http://localhost:3000/user',
+                type : 'POST',
+                data : {
+                    name : name,
+                    password : password,
+                    email : email,
+                    accessToken : accessToken,
+                    refreshToken : refreshToken,
+                    userSeqNo : userSeqNo
+                  },
+                    success:function(data){
+                      if(data == 1){
+                         alert("가입 완료");
+                     }
+                  }
+            })
+        })
+
+
+        $("#authBtn").click( function(){
+            var tmpwindow = window.open("about:blank");
+            tmpwindow.location = "https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id=ha6NEUNwq50GkT7WocPb7xggqffEFKgLQy6JgIMg&redirect_uri=http://localhost:3000/authResult&scope=login inquiry transfer&state=12345678901234567890123456789012&auth_type=0";
+        });
+    </script>
+
+	
+</body>
+
+</html>
