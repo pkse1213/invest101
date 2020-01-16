@@ -56,17 +56,18 @@
       <!--로그인/회원가입--> 
         <div >
             <div>
-                <ul class="navbar-nav ml-auto" >          
-                    <li class="nav-item mx-0 mx-lg-1" >
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="login" >로그인</a>
-                    </li>
-                    <li class="nav-item mx-0 mx-lg-1">
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" >/</a>
-                    </li>
-                    <li class="nav-item mx-0 mx-lg-1">
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="signup">회원가입</a>
-                    </li>
-                </ul> 
+              <ul class="navbar-nav ml-auto" >          
+                <li class="nav-item mx-0 mx-lg-1" >
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" id = 'login' style  = "display:block" href="login" >로그인</a>
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" id ="logout" style  = "display:none">로그아웃</a>
+                </li>
+                <li class="nav-item mx-0 mx-lg-1">
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" id = 'a' style  = "display:block" >/</a>
+                </li>
+                <li class="nav-item mx-0 mx-lg-1">
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" id = 'signup' style  = "display:block" href="signup">회원가입</a>
+                </li>
+            </ul> 
             </div>
             <div>
                 <ul class="navbar-nav ml-auto">          
@@ -101,9 +102,11 @@
                 <br>
                 <!--연습생 후원금 링크 1등~5등-->
                 <h2>연습생 후원금 명예의 전당</h2>
-                <div id = 'ranking'>
-
-        </div>    
+                <div id= 'rimg'></div>
+                <div id = 'ranking'></div>
+                <div id ='space'></div>
+                <div id ='rainking2num'></div>   
+                <div id ='ranking2'></div> 
 
         
       </div>
@@ -179,6 +182,46 @@
 
 
   <script>
+   $('#mypageBtn').click(function () {
+      var jwtToken = sessionStorage.getItem('jwtToken');
+      if (jwtToken == null) {
+        alert('로그인해주세요');
+        location.replace('/login');
+      } 
+    })
+
+    check();
+    function check(){
+      var jwtToken = sessionStorage.getItem('jwtToken');
+      if (jwtToken != null) { //로그인 되어있는 경우
+        $('#login').css({display:"none"});
+        $('#logout').css({display:"block"});
+        $('#signup').css({display:"none"});
+        $('#a').css({display:"none"});
+      }
+    }
+    //로그아웃 버튼 적용 참고
+    $('#logout').click(function(){
+      var jwtToken = sessionStorage.getItem('jwtToken');
+      if (jwtToken != null) {
+      sessionStorage.removeItem('jwtToken');
+      alert('로그아웃 되었습니다.')
+      window.location.reload();
+    }
+    })
+    $('#logoutBtn').click(function () {
+        var jwtToken = sessionStorage.getItem('jwtToken');
+        //console.log(jwtToken);
+        sessionStorage.removeItem('jwtToken');
+        alert('로그아웃 되었습니다');
+        console.log('로그아웃');
+        location.replace('/');
+      })
+  
+
+
+
+
     $('#myDona').click(function(){
       var jwtToken = sessionStorage.getItem('jwtToken');
       if (jwtToken == null) {
@@ -193,39 +236,39 @@
           url: 'http://localhost:3000/trainee/sumAll',
           type: 'get',
           success: function (data) {
-            $("#sumAll").append(data[0].sumall + '원');
+
+            $("#sumAll").append(data[0].sumall.toLocaleString() + '원');
           }
         })
       }
-      $('#logoutBtn').click(function () {
-        var jwtToken = sessionStorage.getItem('jwtToken');
-        //console.log(jwtToken);
-        sessionStorage.removeItem('jwtToken');
-        alert('로그아웃 되었습니다');
-        console.log('로그아웃');
-        location.replace('/');
-      })
-      $('#mypageBtn').click(function () {
-        var jwtToken = sessionStorage.getItem('jwtToken');
-        if (jwtToken == null) {
-          alert('로그인해주세요');
-          location.replace('/login');
-        } else {
-          location.replace('/mypage')
-        }
-      })
+    
+
+
       ranking()
       function ranking(){
         $.ajax({
           url: 'http://localhost:3000/trainee/listByDonation',
           type: 'get',
           success: function (data) {
-            for(var i = 0; i < 5; i++)
+
+            for(var i = 0; i < 3; i++){
+            $('#rimg').append('<img src=/img/rank'+ (i+1) +'.png'+' style="margin-left:25px; margin-right:25px;">')               
             $("#ranking").append('<a href =' + 'http://localhost:3000/traineeInfo?id=' + data[i].trainee_idx + '>'+'<img src='+data[i].photo1+' vspace=5 hspace=5>');
-          }
+            }
+
+            $('#space').append('<br>')  
+
+            for(var i = 3; i < 5; i++){   
+           // $('rainking2num').append('<p style="color:#2c3e50">'+ (i+1) +'</p>');        
+            $("#ranking2").append('<a href =' + 'http://localhost:3000/traineeInfo?id=' + data[i].trainee_idx + '>'+'<img src='+data[i].photo1+' vspace=5 hspace=5>');  
+            }
+
+            }
         })
       }
-  </script>
 
+  </script>
+                            
 </body>
 </html>
+>

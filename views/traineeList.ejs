@@ -65,17 +65,18 @@
       <!--로그인/회원가입-->
       <div>
         <div>
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="login">로그인</a>
+          <ul class="navbar-nav ml-auto" >          
+            <li class="nav-item mx-0 mx-lg-1" >
+                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" id = 'login' style  = "display:block" href="login" >로그인</a>
+                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" id ="logout" style  = "display:none">로그아웃</a>
             </li>
             <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">/</a>
+                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" id = 'a' style  = "display:block" >/</a>
             </li>
             <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="signup">회원가입</a>
+                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" id = 'signup' style  = "display:block" href="signup">회원가입</a>
             </li>
-          </ul>
+        </ul> 
         </div>
         <div>
           <ul class="navbar-nav ml-auto">
@@ -188,22 +189,34 @@
 
 
 
-    $('#logoutBtn').click(function () {
-      var jwtToken = sessionStorage.getItem('jwtToken');
-      //console.log(jwtToken);
-      sessionStorage.removeItem('jwtToken');
-      alert('로그아웃 되었습니다');
-      console.log('로그아웃');
-      location.replace('/');
-    })
+  
+
     $('#mypageBtn').click(function () {
       var jwtToken = sessionStorage.getItem('jwtToken');
       if (jwtToken == null) {
         alert('로그인해주세요');
         location.replace('/login');
-      } else {
-        location.replace('/mypage')
+      } 
+    })
+
+    check();
+    function check(){
+      var jwtToken = sessionStorage.getItem('jwtToken');
+      if (jwtToken != null) { //로그인 되어있는 경우
+        $('#login').css({display:"none"});
+        $('#logout').css({display:"block"});
+        $('#signup').css({display:"none"});
+        $('#a').css({display:"none"});
       }
+    }
+    //로그아웃 버튼 적용 참고
+    $('#logout').click(function(){
+      var jwtToken = sessionStorage.getItem('jwtToken');
+      if (jwtToken != null) {
+      sessionStorage.removeItem('jwtToken');
+      alert('로그아웃 되었습니다.')
+      window.location.reload();
+    }
     })
 
   </script>
