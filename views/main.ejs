@@ -60,20 +60,20 @@
           <!--로그인/회원가입--> 
             <div >
                 <div>
-                    <ul class="navbar-nav ml-auto" >          
-                        <li class="nav-item mx-0 mx-lg-1" >
-                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" id="login" href="login" display="block" >로그인</a>  
-                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" id ="logout" display="none">로그아웃</a>                                       
-                        </li>
-                        <li class="nav-item mx-0 mx-lg-1">
-                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" >/</a>
-                        </li>
-                        <li class="nav-item mx-0 mx-lg-1">
-                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="signup">회원가입</a>
-                        </li>
-                    </ul> 
+                  <ul class="navbar-nav ml-auto" >          
+                    <li class="nav-item mx-0 mx-lg-1" >
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" id = 'login' style  = "display:block" href="login" >로그인</a>
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" id ="logout" style  = "display:none">로그아웃</a>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1">
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" id = 'a' style  = "display:block" >/</a>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1">
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" id = 'signup' style  = "display:block" href="signup">회원가입</a>
+                    </li>
+                </ul> 
                </div>
->
+
 
                 <div>
                     <ul class="navbar-nav ml-auto">          
@@ -128,13 +128,13 @@
 
         <!-- 연습생 데뷔알림 -->     
         <div class="col-md-6 col-lg-4">
-         <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">연습생 데뷔알림</h2>
+         <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">앨범발매 소식</h2>
          <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal2">
           <br>
           <ul style="list-style:none; text-align: center;">                           
-            
-              <li><a href="https://music.bugs.co.kr/album/20299756?wl_ref=list_ab_01"><img src="/img/melon1.PNG"  style="max-width: 100%; height: auto; width: 220px; height:300px ;" alt="데뷔앨범1" ></a></li></li><br>
-               <li><a href="https://music.bugs.co.kr/album/20299449?wl_ref=list_ab_01"><img src="/img/melon3.PNG"  style="max-width: 100%; height: auto; width: 220px; height:300px ;"  alt="데뷔앨범2" ></a> </li>
+            <div id = 'album'>
+              <!-- 연습생 데뷔알림 데이터 불러오는 곳 -->
+            </div>
           </ul>
        </div>
         </div>
@@ -145,11 +145,9 @@
          <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal2">
                
           <ul style="list-style:none; text-align: center;">                           
-              <li ><i class="material-icons"></i> <img src=""> 
-                   <br> <p >김나나 첫 공연!</p ></li>
-                                  
-              <li><i class="material-icons"> <img src=""> </i>
-                   <br> <p>연습생 수진 쇼케이스 오픈!</p></li>
+            <div id = 'action'>
+              <!-- 연습생 활동 데이터 불러오는 곳 -->
+            </div>
           </ul>
        </div>
         </div>
@@ -227,23 +225,7 @@
 
   <script>
 
-    //로그인 로그아웃 display 처리
-    
   
-
-    //로그아웃 버튼시 로그아웃처리
-    $('#logout').click(function(){
-      var jwtToken = sessionStorage.getItem('jwtToken');
-      if (jwtToken != null) {
-      sessionStorage.removeItem('jwtToken');
-      alert('로그아웃 되었습니다.')
-      window.location('/')
-    }
-    })
-
-
-
-
     $('#mypageBtn').click(function () {
       var jwtToken = sessionStorage.getItem('jwtToken');
       if (jwtToken == null) {
@@ -251,6 +233,54 @@
         location.replace('/login');
       } 
     })
+
+    check();
+    function check(){
+      var jwtToken = sessionStorage.getItem('jwtToken');
+      if (jwtToken != null) { //로그인 되어있는 경우
+        $('#login').css({display:"none"});
+        $('#logout').css({display:"block"});
+        $('#signup').css({display:"none"});
+        $('#a').css({display:"none"});
+      }
+    }
+    //로그아웃 버튼 적용 참고
+    $('#logout').click(function(){
+      var jwtToken = sessionStorage.getItem('jwtToken');
+      if (jwtToken != null) {
+      sessionStorage.removeItem('jwtToken');
+      alert('로그아웃 되었습니다.')
+      window.location.reload();
+    }
+    })
+
+    //벅스
+    albumList()
+    function albumList() {
+      $.ajax({
+        url: 'http://localhost:3000/trainee/albumList',
+        type: 'get',
+        success: function (data) {
+          for (var i = 0; i < data.length; i++) {
+            $("#album").append('<li><a href =' +data[i].url+'>' + '<img src="' + data[i].img + '"></a></li><p>'+data[i].title+'<br>'+data[i].singer+'<br>'+data[i].date+ '</p><br>');
+          }
+        }
+      })
+    }
+
+    //활동알림
+    actionList()
+    function actionList() {
+      $.ajax({
+        url: 'http://localhost:3000/trainee/list',
+        type: 'get',
+        success: function (data) {
+          for (var i = 0; i < 3; i++) {
+            $("#action").append('<li><a href =' +data[i].youtube+'>' + '<img src="' + data[i].photo2 + '"></a></li><p>'+data[i].title+'</p><br>');
+          }
+        }
+      })
+    }
   
   </script>
 
