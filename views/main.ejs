@@ -195,9 +195,10 @@
                 <ul style="list-style:none; text-align: center;">                           
                     <li ><i class="material-icons">done_outline</i>
                       <span>신규연습생 홍길동이 등록되었습니다!</span></li>
-                                        
+                     <br><hr>
                     <li> <i class="material-icons">done_outline</i>
                       <span>신규연습생 김나나가 등록되었습니다!</span></li>
+                      <br><hr>
                 </ul>
              </div>
         </div>
@@ -342,7 +343,7 @@
         type: 'get',
         success: function (data) {
           for (var i = 0; i < data.length; i++) {
-            $("#album").append('<li><a href =' +data[i].url+'>' + '<img src="' + data[i].img + '"></a></li><p>'+data[i].title+'<br>'+data[i].singer+'<br>'+data[i].date+ '</p><br>');
+            $("#album").append('<li><a href =' +data[i].url+'>' + '<img src="' + data[i].img + '"></a></li><p>'+data[i].title+'<br>'+data[i].singer+'<br>'+data[i].date+ '</p><hr><br> ');
           }
         }
       })
@@ -356,7 +357,7 @@
         type: 'get',
         success: function (data) {
           for (var i = 0; i < 3; i++) {
-            $("#action").append('<li><a href =' +data[i].youtube+'>' + '<img src="' + data[i].photo2 + '"></a></li><p>'+data[i].title+'</p><br>');
+            $("#action").append('<li><a href =' +data[i].youtube+'>' + '<img src="' + data[i].photo2 + '"></a></li><p>'+data[i].title+'</p><hr><br>');
           }
         }
       })

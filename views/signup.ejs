@@ -47,17 +47,17 @@
 						<div class="form-row no-padding">
 							<i class="fa fa-user"></i>
                             
-                            <input type="text" id="userName"  class="form-element" placeholder="Username" value="이름">
+                            <input type="text" id="userName"  class="form-element"  value="이름">
                         </div>
                         <div class="form-row no-padding">
                             <i class="fa fa-envelope"></i>
                             
-                            <input type="email" id="userEmail" class="form-element" placeholder="Email" value="이메일">
+                            <input type="email" id="userEmail" class="form-element"  value="이메일">
                         </div>
                         <div class="form-row no-padding">
                             <i class="fa fa-lock"></i>
                             
-                            <input type="password" id="userPassword" class="form-element" placeholder="Password" value="비밀번호">
+                            <input type="password" id="userPassword" class="form-element"  value="비밀번호">
 						</div>
 									
 					</div>
@@ -72,15 +72,15 @@
 						<div class="form-row-group with-icons" style="width:500px; height:25pxpx; margin-left:700px;">
 							<div class="form-row no-padding">
 								<i class="fa fa-credit-card"></i>                          
-								<input type="text" id="accessToken" class="form-element" placeholder="Email" value="accessToken">
+								<input type="text" id="accessToken" class="form-element"  placeholder="accessToken">
 							</div>
 							<div class="form-row no-padding">
 								<i class="fa fa-credit-card-alt"></i>                 
-								<input type="text" id="refreshToken" class="form-element" placeholder="Email" value="refreshToken">
+								<input type="text" id="refreshToken" class="form-element"  placeholder="refreshToken">
 							</div>
 							<div class="form-row no-padding">
 								<i class="fa fa-info"></i>                    
-								<input type="text" id="userseqno" class="form-element" placeholder="Email" value="userseqno">
+								<input type="text" id="userseqno" class="form-element"  placeholder="userseqno">
 							</div>
 										
 						</div>
@@ -125,6 +125,17 @@
     <script src="js/global.script.js"></script>
     
     <script>
+		$("#userEmail").click(function () {
+            $("#userEmail").val('');
+        });
+        $("#userPassword").click(function () {
+            $("#userPassword").val('');
+        });
+
+		$("#userName").click(function () {
+            $("#userName").val('');
+        });
+
         $("#signupBtn").click(function(){
             var name = $("#userName").val();        
             var email = $("#userEmail").val();        
@@ -135,7 +146,7 @@
 
 
             $.ajax({
-                url:'http://localhost:3000/user',
+                url:'http://localhost:3000/auth/signUp',
                 type : 'POST',
                 data : {
                     name : name,
@@ -147,7 +158,8 @@
                   },
                     success:function(data){
                       if(data == 1){
-                         alert("가입 완료");
+						 alert("가입 완료");
+						 location.replace('/main');
                      }
                   }
             })
@@ -158,7 +170,8 @@
             var tmpwindow = window.open("about:blank");
             tmpwindow.location = "https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id=ln6q4u3zmpl5g0JkTbATwGtDuz8boyV7DgTyIEU9&redirect_uri=http://localhost:3000/auth/token&scope=login inquiry transfer&state=12345678901234567890123456789012&auth_type=0";
         });
-    </script>
+	</script>
+	
 
 	
 </body>
